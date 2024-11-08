@@ -11,7 +11,7 @@ import (
 var DB *gorm.DB
 
 func Connect() {
-	dsn := "user:admin@tcp(127.0.0.1:3306)/mynotes?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "root:admin@tcp(127.0.0.1:3306)/mynotes?charset=utf8mb4&parseTime=True&loc=Local"
 	connection, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
 	if err != nil {
@@ -19,8 +19,6 @@ func Connect() {
 	}
 
 	DB = connection
-
-	// Automatically migrate your schema, keep this for initial setup
 	if err := connection.AutoMigrate(&models.User{}, &models.Note{}); err != nil {
 		log.Fatalf("could not migrate database schema: %v", err)
 	}
